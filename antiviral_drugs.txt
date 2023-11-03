@@ -1,0 +1,6 @@
+Remdesivir	CCC(CC)COC(=O)C(C)NP(=O)(OCC1C(C(C(O1)(C#N)C2=CC=C3N2N=CN=C3N)O)O)OC4=CC=CC=C4
+Galidesivir	C1=C(C2=C(N1)C(=NC=N2)N)C3C(C(C(N3)CO)O)O
+Penciclovir	C1=NC2=C(N1CCC(CO)CO)N=C(NC2=O)N
+Tenofovir	CC(CN1C=NC2=C(N=CN=C21)N)OCP(=O)(O)O
+
+
