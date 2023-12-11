@@ -10,7 +10,16 @@ We provide two example input files, antiviral_drugs.txt for multiple query compo
 Download: [Embedding vetors of Libraries](https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t)
 
 ## Start
-$ git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
-$ wget https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t # Embedding vectors of libraries
-$ unzip -d Library.zip
-$ appyter dr_emb.ipynb --extras=toc --extras==toggle-code
+``` {bash}
+git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
+```
+``` {bash}
+wget https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t # Embedding vectors of libraries
+```
+``` {bash}
+unzip -d Library.zip
+```
+``` {bash}
+appyter dr_emb.ipynb --extras=toc --extras==toggle-code
+```
+
