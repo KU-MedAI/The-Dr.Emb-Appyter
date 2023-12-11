@@ -24,9 +24,9 @@ def library_npl(input_db):
     elif input_db == 'zinc':
         library_df = pd.read_csv('/home/songhyeon/Research/Embedding_appyter/Library/ZINC_named+waited.tsv', sep='\t', index_col=0)
     elif input_db == 'mce':
-        library_df = pd.read_csv('/home/songhyeon/Research/Embedding_appyter/Library/MCE_original.tsv', sep='\t', index_col=0)
+        library_df = pd.read_csv('/home/songhyeon/Research/Embedding_appyter/Library/MCE_library.tsv', sep='\t', index_col=0)
     elif input_db == 'selleck':
-        library_df = pd.read_csv('/home/songhyeon/Research/Embedding_appyter/Library/Selleck_except().tsv', sep='\t', index_col=0)
+        library_df = pd.read_csv('/home/songhyeon/Research/Embedding_appyter/Library/Selleckchem_library.tsv', sep='\t', index_col=0)
     
     library_df.rename(columns={'Name':'drug2_name','SMILES':'drug2_smiles'}, inplace=True)
     library_df1 = library_df['drug2_name']
@@ -421,3 +421,18 @@ def jaccard_similarity(v1, v2):
     intersection = np.logical_and(v1, v2)
     union = np.logical_or(v1, v2)
     return intersection.sum() / union.sum()
+
+
+def find_duplicate_names(dictionary):
+    name_to_keys = {}
+
+    for key, value in dictionary.items():
+        for name in value:
+            if name in name_to_keys:
+                name_to_keys[name].append(key)
+            else:
+                name_to_keys[name] = [key]
+
+    result_dict = {name: keys for name, keys in name_to_keys.items() if len(keys) > 1}
+
+    return result_dict

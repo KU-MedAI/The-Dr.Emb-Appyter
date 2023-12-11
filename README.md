@@ -4,8 +4,13 @@ The Dr.Emb Appyter is a web platform which searches closely located compounds of
 We provide the [user guide](https://docs.google.com/uc?export=download&id=1GHDrT_EIGfNbG_TWeYtwV59HYc8q8zrq) for those who experience challenges when navigating the Dr.Emb Appyter.
 
 ## Example input files
-For query compounds, antiviral_drugs.txt
-For custom library, custom_library.tsv
+We provide two example input files, antiviral_drugs.txt for multiple query compounds and custom_library.tsv for custom library
 
 ## Embedding vectors of libraries using each embedding method
-[Embedding vetors of ibraries](https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t)
+Download: [Embedding vetors of Libraries](https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t)
+
+## Start
+$ git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
+$ wget https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t # Embedding vectors of libraries
+$ unzip -d Library.zip
+$ appyter dr_emb.ipynb --extras=toc --extras==toggle-code
