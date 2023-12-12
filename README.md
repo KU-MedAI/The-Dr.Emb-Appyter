@@ -11,7 +11,7 @@ Information on four antiviral drugs, including their names and smiles. <br>
 A library containing about 700 compounds, with mechanism of action (MoA) information indicated in 'Description' column. <br>
 
 ## Embedding vectors of libraries using each embedding method
-Download (10 GB): [Embedding vetors of Libraries](https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t)
+Download (10 GB): [Embedding vetors of Libraries](https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD&confirm=t)
 
 ## Start
 ``` {bash}
@@ -19,7 +19,7 @@ git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
 ```
 ``` {bash}
 # Embedding vectors of libraries (10 GB)
-wget https://docs.google.com/uc?export=download&id=1DfrbfQ8ranFIa4MfV-cKaTypteQDhcYp&confirm=t
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD" -O Library.zip && rm -rf /tmp/cookies.txt
 ```
 ``` {bash}
 unzip -d Library.zip
