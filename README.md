@@ -71,12 +71,12 @@ appyter dr_emb.ipynb --extras=toggle-code --extras=toc --extras=hide-code
 ```
 
 ## Docker
+    docker build -t dremb:1.0 .
+    docker run --privileged --name dremb dremb:1.0
+When running on Docker, use the file `dr_emb_docker.ipynb`. To view a simplified version of the execution results without the code, use the `--extras` option.
 ``` {bash}
-docker build -t dremb:1.0 .
-docker run --privileged --name dremb dremb:1.0
+appyter dr_emb_docker.ipynb --extras=toggle-code --extras=toc --extras=hide-code
 ```
-<p> When running on Docker, use the file `dr_emb_docker.ipynb`. To view a simplified version of the execution results without the code, use the `--extras` option. </p>
-    appyter dr_emb_docker.ipynb --extras=toggle-code --extras=toc --extras=hide-code
 
 ------------
 
