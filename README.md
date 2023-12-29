@@ -11,11 +11,11 @@ Information on four antiviral drugs, including their names and smiles. <br>
 A library containing about 700 compounds, with mechanism of action (MoA) information indicated in 'Description' column. <br>
 
 ## List of files to download
-1. [Embedding vetors of Default Libraries](https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD&confirm=t) 10GB
-2. [Pretrained Mol2vec model](https://docs.google.com/uc?export=download&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z&confirm=t) 75MB
+1. [Embedding vetors of Default Libraries](https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD&confirm=t) (10GB)
+2. [Pretrained Mol2vec model](https://docs.google.com/uc?export=download&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z&confirm=t) (75MB)
 
 ## Start
-# Common Preparation
+### Common Preparation
 ``` {bash}
 git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
 cd The-Dr.Emb-Appyter
@@ -26,7 +26,7 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 wget 'https://docs.google.com/uc?export=download&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z' -O methods/mol2vec_model_300dim.pkl
 ```
 
-# Local
+### Local
 ``` {bash}
 pip install --no-cache-dir -r requirements.txt
 ```
@@ -34,7 +34,7 @@ pip install --no-cache-dir -r requirements.txt
 appyter dr_emb.ipynb --extras=toggle-code --extras=toc --extras=hide-code
 ```
 
-# Docker
+### Docker
 ``` {bash}
 docker build -t dremb:1.0 .
 docker run --privileged --name dremb dremb:1.0
