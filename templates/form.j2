@@ -2,23 +2,43 @@
 
 {% block head %}
 {{ super() }}
-{% endblock %}
+{% endblock %}​
 
 {% block style %}
 {{ super() }}
-{% endblock %}
+<style>
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
 
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+</style>
+{% endblock %}
+​
 {% block body %}
 <div class="row">
 <div class="col-sm-12">
 <div class="container">
     <div class="mt-3 row align-items-center">
         <div class="col-3">
-            <img src="{{ url_for('static', filename='results.png') }}" style="width:100px" class="img-fluid float-right">
+            <img src="{{ url_for('static', filename='results.png') }}" style="width:150px" class="img-fluid float-right">
         </div>
         <div class="col-7">
-            <h1> The Dr.Emb Appyter </h1>
-            <p class="my-0"> A Web Platform for Drug Discovery using Embedding Vectors </p>
+            <h1> Dr.Emb Appyter </h1>
+            <p class="my-0"> A Web Platform for Drug Discovery using Embedding Vectors <br> 
+              We provide the <a href="https://drive.google.com/file/d/1S-NRfg8Sr7AkVumpcVbdYZ2HmQOOC_w8/view?usp=sharing" target="_blank" rel="noopener noreferrer">user guide</a> for those who experience challenges when navigating Dr.Emb Appyter. </p>
         </div>
     </div>
 </div>

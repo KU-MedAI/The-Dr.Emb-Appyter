@@ -1,0 +1,13 @@
+{% extends "biojupies/base.j2" %}
+
+{% block head %}
+<title>Dr.Emb Appyter</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename="shorticon.png")}}" >
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<style>
+table td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+</style>
+{% endblock %}

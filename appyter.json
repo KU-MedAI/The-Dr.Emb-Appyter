@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/MaayanLab/appyter-catalog/main/schema/appyter-validator.json",
+  "name": "Dr.Emb-Appyter",
+  "title": "Dt.Emb Appyter",
+  "version": "0.0.1",
+  "description": "A Web Platform for Drug Discovery using Embedding Vectors",
+  "image": "results.png",
+  "authors": [
+    {
+      "name": "songhyeon Kim",
+      "email": "ksonghyeon@korea.ac.kr"
+    },
+    {
+        "name": "Minji Jeon",
+        "email": "mjjeon@korea.ac.kr"
+    }
+  ],
+  "url": "https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git",
+  "tags": [
+    "Drug Discovery",
+    "Embedding",
+    "Compound Search"
+  ],
+  "license": "CC-BY-NC-SA-4.0",
+  "appyter": {
+    "file": "dr_emb.ipynb",
+    "profile": "biojupies",
+    "extras": [
+        "toc",
+        "toggle-code"
+      ]
+  }
+}

@@ -14,20 +14,17 @@ from itertools import combinations
 from IPython.display import HTML, display, Markdown, IFrame, FileLink, Image, HTML
 from scipy.spatial import distance
 
-sys_path = os.getcwd()
-sys.path.append(sys_path)
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def library_npl(input_db):
     if input_db == 'kcb':
-        library_df = pd.read_csv('../../../Library/kcb_final.tsv', sep='\t', index_col=0)
+        library_df = pd.read_csv('/app/Library/kcb_final.tsv', sep='\t', index_col=0) 
     elif input_db == 'zinc':
-        library_df = pd.read_csv('../../../Library/ZINC_named+waited.tsv', sep='\t', index_col=0)
+        library_df = pd.read_csv('/app/Library/ZINC_named+waited.tsv', sep='\t', index_col=0)
     elif input_db == 'mce':
-        library_df = pd.read_csv('../../../Library/MCE_library.tsv', sep='\t', index_col=0)
+        library_df = pd.read_csv('/app/Library/MCE_library.tsv', sep='\t', index_col=0)
     elif input_db == 'selleck':
-        library_df = pd.read_csv('../../../Library/Selleckchem_library.tsv', sep='\t', index_col=0)
+        library_df = pd.read_csv('/app/Library/Selleckchem_library.tsv', sep='\t', index_col=0) 
     
     library_df.rename(columns={'Name':'drug2_name','SMILES':'drug2_smiles'}, inplace=True)
     library_df1 = library_df['drug2_name']
@@ -53,9 +50,9 @@ def custom_npl(custom_df):
 
 def embed_vector_lib(input_db, embed_method):
     if embed_method == 'ReSimNet':
-        embedding_vectors = pd.read_pickle(f'../../../Library/{embed_method}_{input_db}/{embed_method}_{input_db}_7.pkl') #../../../Library/{embed_method}_{input_db}/{embed_method}_{input_db}_7.pkl
+        embedding_vectors = pd.read_pickle(f'/app/Library/{embed_method}_{input_db}/{embed_method}_{input_db}_7.pkl')
     else:
-        embedding_vectors = pd.read_pickle(f'../../../Library/{embed_method}_{input_db}/{embed_method}_{input_db}.pkl') #../../../Library/{embed_method}_{input_db}/{embed_method}_{input_db}.pkl
+        embedding_vectors = pd.read_pickle(f'/app/Library/{embed_method}_{input_db}/{embed_method}_{input_db}.pkl')
     return embedding_vectors
 
 
@@ -73,7 +70,7 @@ def drug_embeddings(drug_dict):
     result_dict = dict()
     global model
     model = methods.moable.model.DrugEncoder()
-    model.load_state_dict(torch.load('../../../methods/moable/models/moable.pth')) #../../../methods/moable/models/moable.pth
+    model.load_state_dict(torch.load('/app/methods/moable/models/moable.pth'))
     model.to(device)
     model.eval()
     
@@ -90,7 +87,7 @@ def drug_embeddings(drug_dict):
 
 
 def pretrained_MACAW(input_db):
-    with open(f'../../../methods/MACAW/MACAW_{input_db}_pre.pkl', 'rb') as model_file: #../../../methods/MACAW/MACAW_{input_db}_pre.pkl
+    with open(f'/app/methods/MACAW/MACAW_{input_db}_pre.pkl', 'rb') as model_file:
         mcw = pickle.load(model_file)
         
     return mcw
@@ -105,7 +102,7 @@ def custom_embedding(drug_dict, embed_method, output_path, output_file):
             
     # Sequence
     elif embed_method == 'Mol2vec':
-        featurizer = dc.feat.Mol2VecFingerprint('../../../methods/mol2vec/mol2vec_model_300dim.pkl') #../../../methods/mol2vec/mol2vec_model_300dim.pkl
+        featurizer = dc.feat.Mol2VecFingerprint('/app/methods/mol2vec/mol2vec_model_300dim.pkl') 
         for name, smiles in drug_dict.items():
             with open(output_path + output_file, 'wb') as f:
                 embed_dict[name] = featurizer.featurize(smiles)
@@ -134,7 +131,7 @@ def jaccard_finder(input_db, embed_dict, embed_method, queries, topk_candidates)
     if input_db == 'custom' and embed_method in ['ECFP', 'MACCSKeys']:
         library_ecfp = embed_dict
     elif input_db != 'custom' and embed_method in ['ECFP', 'MACCSKeys']:
-        library_ecfp = pd.read_pickle(f"../../../Library/{embed_method}_{input_db}/{embed_method}_{input_db}.pkl") #../../../Library/{embed_method}_{input_db}/{embed_method}_{input_db}.pkl
+        library_ecfp = pd.read_pickle(f"/app/Library/{embed_method}_{input_db}/{embed_method}_{input_db}.pkl") 
     else:
         print('Jaccard similarity is ECFP, MACCSKeys Only')
 
@@ -179,7 +176,7 @@ def jaccard_dataframes(input_db, custom_embed_dict, embed_method, embed_dict, to
 
 
 def resimnet_finder(input_db, npl, output_embed_filename, topk_candidate, name, resimnet_model):
-    embedding_vectors_directory = f"../../../Library/ReSimNet_{input_db}/" #../../../Library/ReSimNet_{input_db}/
+    embedding_vectors_directory = f"/app/Library/ReSimNet_{input_db}/"
     embedding_vectors_filenames = os.listdir(embedding_vectors_directory)
     result_df_list = list()
 
@@ -286,7 +283,7 @@ def custom_finder(custom_dict, embed_method, npl, sim_method, output_embed_filen
 
             
 def finder(input_db, embed_method, npl, sim_method, output_embed_filename, topk_candidate, name):
-    embedding_vectors_directory = f"../../../Library/{embed_method}_{input_db}/" #../../../Library/{embed_method}_{input_db}/
+    embedding_vectors_directory = f"/app/Library/{embed_method}_{input_db}/" 
     embedding_vectors_filenames = os.listdir(embedding_vectors_directory)
     result_df_list = list()
 
@@ -343,7 +340,7 @@ def finder(input_db, embed_method, npl, sim_method, output_embed_filename, topk_
 
 
 def MA_finder(input_db, embed_method, npl, sim_method, output_embed_filename, topk_candidate, name):
-    embedding_vectors_directory = f"../../../Library/{embed_method}_{input_db}/"
+    embedding_vectors_directory = f"/app/Library/{embed_method}_{input_db}/" 
     embedding_vectors_filenames = os.listdir(embedding_vectors_directory)
     result_df_list = list()
 
@@ -399,7 +396,7 @@ def make_clickable(smiles, site="pubchem"):
     if site == "pubchem":
         url = f"https://pubchem.ncbi.nlm.nih.gov/#query={smiles}&input_type=smiles"
     else:
-        url = f"https://zinc15.docking.org/substances/{smiles}/" #smiles is actually ZINC15 ID
+        url = f"https://zinc15.docking.org/substances/{smiles}/"
     return '<a href="{}" rel="noopener noreferrer" target="_blank">{}</a>'.format(url,smiles)
 
 

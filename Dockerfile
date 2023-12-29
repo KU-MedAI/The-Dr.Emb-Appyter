@@ -7,21 +7,27 @@ FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN_VERSION}-devel-ubuntu${UBUNTU_VERS
 LABEL maintainer "http://medai.korea.ac.kr"
 
 ARG PYTHON_VERSION=3.8
-ARG CONDA_ENV_NAME=dremb
 
-# Let us install tzdata painlessly
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND "noninteractive"
+ENV TZ "America/New_York"
 
-# Needed for string substitution
+CMD ["/bin/bash"]
+
 SHELL ["/bin/bash", "-c"]
-RUN echo "Acquire::Check-Valid-Until \"false\";\nAcquire::Check-Date \"false\";" | cat > /etc/apt/apt.conf.d/10no--check-valid-until
-RUN echo "Preparing system..." \
-  && apt-get update && apt-get install -y --no-install-recommends \
+
+RUN set -x \
+  && echo "Preparing system..." \
+  && apt-get -y update \
+  && apt-get -y install \
     ca-certificates \
     ccache \
     cmake \
     curl \
+    fuse \
     git \
+    nginx \
+    python3-dev \
+    python3-pip \
     libfreetype6-dev \
     libhdf5-serial-dev \
     libzmq3-dev \
@@ -35,76 +41,63 @@ RUN echo "Preparing system..." \
     ssh \
     sudo \
     unzip \
-    vim \
-    wget
-RUN rm -rf /var/lib/apt/lists/*
+    wget \
+  && rm -rf /var/lib/apt/lists/* \
+  && pip3 install --no-cache-dir --upgrade pip
 
-# For CUDA profiling
 ENV LD_LIBRARY_PATH /usr/local/cuda-${CUDA}/targets/x86_64-linux/lib:/usr/local/cuda/extras/CUPTI/lib64:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
     echo "/usr/local/cuda/lib64/stubs" > /etc/ld.so.conf.d/z-cuda-stubs.conf && \
     ldconfig
 
-# See http://bugs.python.org/issue19846
-ENV LANG C.UTF-8
-RUN curl -o /tmp/miniconda.sh -sSL http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    chmod +x /tmp/miniconda.sh && \
-    bash /tmp/miniconda.sh -bfp /usr/local && \
-    rm /tmp/miniconda.sh
-RUN conda update -y conda
+RUN set -x \
+  && echo "Installing jupyter kernel..." \
+  && pip3 install --no-cache-dir ipython_genutils ipykernel \
+  && python3 -m ipykernel install
 
-# For connecting via ssh
-RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
-    echo "PermitEmptyPasswords yes" >> /etc/ssh/sshd_config && \
-    echo "UsePAM no" >> /etc/ssh/sshd_config
-
-# Create the conda environment
-COPY environment.yaml .
+ADD requirements.txt /app/requirements.txt
 RUN echo "Preparing Dr.Emb Appyter..." && \
-  conda config --set ssl_verify false && \
-  conda env create -f environment.yaml
+  pip3 install --no-cache-dir -r /app/requirements.txt && \
+  pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113 && \
+  rm /app/requirements.txt
 
-ENV PATH /usr/local/envs/$CONDA_ENV_NAME/bin:$PATH
-RUN echo "source activate ${CONDA_ENV_NAME}" >> ~/.bashrc
+ARG appyter_version=appyter[production]@git+https://github.com/Maayanlab/appyter
+RUN set -x \
+  && echo "Installing appyter..." \
+  && pip3 install --no-cache-dir --upgrade ${appyter_version}
 
-# Enable jupyter lab
-RUN source activate ${CONDA_ENV_NAME} && \
-    conda install -c conda-forge jupyterlab && \
-    jupyter serverextension enable --py jupyterlab --sys-prefix
-
-# Install the packages
-RUN source activate ${CONDA_ENV_NAME} && \
-    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+COPY catalog_helper.py /bin/appyter-catalog-helper
+RUN set -x \
+  && echo "Installing catalog helper..." \
+  && chmod 755 /bin/appyter-catalog-helper
 
 RUN set -x \
   && echo "Preparing user..." \
   && useradd -ms /bin/bash -d /app app \
-  && adduser app docker \
   && groupadd fuse \
-  && adduser app fuse
+  && adduser app fuse \
+  && mkdir -p /app /app/data /data \
+  && chown -R app:app /app /data \
+  && chmod og+rwx -R /var/lib/nginx /var/log/nginx
 
-RUN set -x \
-  echo "Installing jupyter kernel..." && \
-  source activate ${CONDA_ENV_NAME} && \
-  pip3 install --no-cache-dir ipython_genutils ipykernel && \
-  python3 -m ipykernel install
+USER app
+WORKDIR /app
+EXPOSE 5000
+VOLUME /app/data
 
-RUN mkdir /Dr.Emb_Appyter
-WORKDIR /Dr.Emb_Appyter
-ADD . /Dr.Emb_Appyter
+ENV PATH "/app:$PATH"
+ENV PYTHONPATH "/app:$PYTHONPATH"
+ENV APPYTER_PREFIX "/"
+ENV APPYTER_HOST "0.0.0.0"
+ENV APPYTER_PORT "5000"
+ENV APPYTER_DEBUG "false"
+ENV APPYTER_PROFILE "biojupies"
+ENV APPYTER_EXTRAS '["toc", "toggle-code"]'
+ENV APPYTER_IPYNB "dr_emb.ipynb"
 
-RUN echo "Downloading embedding vectors..." && \
-  wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD" -O Library.zip && rm -rf /tmp/cookies.txt && \
-  unzip Library.zip && \
-  wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z" -O methods/mol2vec/mol2vec_model_300dim.pkl && rm -rf /tmp/cookies.txt
+COPY --chown=app:app . /app
 
-ENV APPYTER_PREFIX=/
-ENV APPYTER_HOST=0.0.0.0
-ENV APPYTER_PORT=5000
-ENV APPYTER_DEBUG=false
-ENV APPYTER_IPYNB=dr_emb.ipynb
-ENV APPYTER_PROFILE=biojupies
-ENV APPYTER_EXTRAS=["toc"]
-ENV APPYTER_EXTRAS=["toggle-code"]
-
-CMD ["appyter" "flask-app"]
+# BEGIN CATALOG
+RUN rm /app/catalog_helper.py
+RUN appyter-catalog-helper setup
+# END CATALOG
