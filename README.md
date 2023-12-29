@@ -6,8 +6,8 @@ We provide the <a href="https://drive.google.com/file/d/1S-NRfg8Sr7AkVumpcVbdYZ2
 ![DrEmb](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/bff87d59-ddd5-4b0d-a432-8fe8eefda4d1)
 
 ## Abstract
-Motivation: Numerous in silico approaches have been proposed to reduce the time and cost of drug discovery. One of the most important processes in in silico approaches is the employment of embedding methods to properly map the properties of chemical compounds into a latent space. Using the embedding methods, compounds with similar properties will be closely located in the space, and these embedding vectors can be used to find other compounds with the desired properties based on the distance between compounds and as input for other downstream tasks, such as drug-target interaction prediction. However, they often require substantial computational resources and programming skills, so it is challenging for biologists and medicinal chemists to apply in silico methods in their research. Therefore, it is necessary to develop a user-friendly platform on which users can search for chemical compounds based on embedding vectors without any technical barriers. <br>
-Results: We proposed Dr.Emb Appyter, a user-friendly web platform for drug discovery. It uses embedding vectors to identify compounds similar to a given query in the embedding space. Dr.Emb Appyter provides various types of embedding methods, such as fingerprinting, SMILES, and transcriptional response-based methods, and embeds numerous compounds using them. The Faiss-based search system efficiently finds the closest compounds of query compounds in the library. Additionally, Dr.Emb Appyter offers information on the top compounds; visualizes the results with 3D scatter plots, heatmaps, and UpSet plots; and analyzes the results using a drug-set enrichment analysis. Dr.Emb Appyter is freely available at https://dremb.korea.ac.kr. 
+ Numerous in silico approaches have been proposed to reduce the time and cost of drug discovery. One of the most important processes in in silico approaches is the employment of embedding methods to properly map the properties of chemical compounds into a latent space. Using the embedding methods, compounds with similar properties will be closely located in the space, and these embedding vectors can be used to find other compounds with the desired properties based on the distance between compounds and as input for other downstream tasks, such as drug-target interaction prediction. However, they often require substantial computational resources and programming skills, so it is challenging for biologists and medicinal chemists to apply in silico methods in their research. Therefore, it is necessary to develop a user-friendly platform on which users can search for chemical compounds based on embedding vectors without any technical barriers. <br>
+ We proposed Dr.Emb Appyter, a user-friendly web platform for drug discovery. It uses embedding vectors to identify compounds similar to a given query in the embedding space. Dr.Emb Appyter provides various types of embedding methods, such as fingerprinting, SMILES, and transcriptional response-based methods, and embeds numerous compounds using them. The Faiss-based search system efficiently finds the closest compounds of query compounds in the library. Additionally, Dr.Emb Appyter offers information on the top compounds; visualizes the results with 3D scatter plots, heatmaps, and UpSet plots; and analyzes the results using a drug-set enrichment analysis. Dr.Emb Appyter is freely available at https://dremb.korea.ac.kr. 
 ------------
 
 # File Information
@@ -24,27 +24,27 @@ We provide two example input files, antiviral_drugs.txt for multiple query compo
 
 # Simple Results
 ## Table with Top k Candidates
-The top k compounds are retrieved from the library and ranked based on the highest similarity. The names and SMILES of the compounds in the library are displayed in the 'compound_name' and 'compound_smiles' columns, respectively. Additionally, the SMILES information is interactive, with clickable links redirecting to PubChem.
+The top k compounds are retrieved from the library and ranked based on the highest similarity. The names and SMILES of the compounds in the library are displayed in the 'compound_name' and 'compound_smiles' columns, respectively. Additionally, the SMILES information is interactive, with clickable links redirecting to PubChem. <br>
 ![tabletopk](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/7e2555c0-0471-406f-b948-2196b925e0c5)
 
 ## Scatter Plot
-A scatter plot by UMAP visualizes all the compounds in the library (denoted as L, in gray, with a circle shape), along with the query compounds (Q, diamond) and the top k compounds (Q_topk, circle) in the embedding space.
+A scatter plot by UMAP visualizes all the compounds in the library (denoted as L, in gray, with a circle shape), along with the query compounds (Q, diamond) and the top k compounds (Q_topk, circle) in the embedding space. <br>
 ![Scatterplot](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/24ba0eaa-28aa-4534-bf2a-84de85eb08ea)
 
 ## UpSet Plot
-Dr.Emb Appyter visualizes overlapping compounds graphically. An Upset plot illustrates any overlapping compounds found for each query compound.
+Dr.Emb Appyter visualizes overlapping compounds graphically. An Upset plot illustrates any overlapping compounds found for each query compound. <br>
 ![UpSetplot](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/0a651d38-bfd0-4581-80cc-bb0ad934f6e7)
 
 ## Heatmap
-Dr.Emb Appyter shows similarities between user-queried compounds. The heatmap visualizes the similarity between the embedding vectors of the query compounds entered by the user, facilitating an assessment of the likelihood that the query compounds share similar properties.
+Dr.Emb Appyter shows similarities between user-queried compounds. The heatmap visualizes the similarity between the embedding vectors of the query compounds entered by the user, facilitating an assessment of the likelihood that the query compounds share similar properties. <br>
 ![Heatmap](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/7a3ada33-30b8-4a68-8f6a-1fec902342f7)
 
 
 ## Drug-Set Enrichment Analysis (Drug Enrichr)
-Drug Enrichr is a tool that performs drug set enrichment analysis (DSEA) in terms of targets, mode of actions, side effects, pathways or ontologies. Dr.Emb Appyter performs DSEA by entering the names of the top k compounds into Drug Enrichr.
+Drug Enrichr is a tool that performs drug set enrichment analysis (DSEA) in terms of targets, mode of actions, side effects, pathways or ontologies. Dr.Emb Appyter performs DSEA by entering the names of the top k compounds into Drug Enrichr. <br>
 ![TableDSEA](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/8d971b72-8fb9-4eba-ab20-5afbf82943cd)
 
-To explore additional drug set results, please click the link provided below in Dr.Emb Appyter.
+To explore additional drug set results, please click the link provided below in Dr.Emb Appyter. <br>
 ![Details](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/5b8c8efa-3177-4747-88a3-bb000a9c3838)
 
 ------------
