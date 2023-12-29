@@ -6,8 +6,9 @@ We provide the <a href="https://drive.google.com/file/d/1S-NRfg8Sr7AkVumpcVbdYZ2
 ![DrEmb](https://github.com/KU-MedAI/The-Dr.Emb-Appyter/assets/100034570/bff87d59-ddd5-4b0d-a432-8fe8eefda4d1)
 
 ## Abstract
- Numerous in silico approaches have been proposed to reduce the time and cost of drug discovery. One of the most important processes in in silico approaches is the employment of embedding methods to properly map the properties of chemical compounds into a latent space. Using the embedding methods, compounds with similar properties will be closely located in the space, and these embedding vectors can be used to find other compounds with the desired properties based on the distance between compounds and as input for other downstream tasks, such as drug-target interaction prediction. However, they often require substantial computational resources and programming skills, so it is challenging for biologists and medicinal chemists to apply in silico methods in their research. Therefore, it is necessary to develop a user-friendly platform on which users can search for chemical compounds based on embedding vectors without any technical barriers. <br>
- We proposed Dr.Emb Appyter, a user-friendly web platform for drug discovery. It uses embedding vectors to identify compounds similar to a given query in the embedding space. Dr.Emb Appyter provides various types of embedding methods, such as fingerprinting, SMILES, and transcriptional response-based methods, and embeds numerous compounds using them. The Faiss-based search system efficiently finds the closest compounds of query compounds in the library. Additionally, Dr.Emb Appyter offers information on the top compounds; visualizes the results with 3D scatter plots, heatmaps, and UpSet plots; and analyzes the results using a drug-set enrichment analysis. Dr.Emb Appyter is freely available at https://dremb.korea.ac.kr. 
+<p> Numerous in silico approaches have been proposed to reduce the time and cost of drug discovery. One of the most important processes in in silico approaches is the employment of embedding methods to properly map the properties of chemical compounds into a latent space. Using the embedding methods, compounds with similar properties will be closely located in the space, and these embedding vectors can be used to find other compounds with the desired properties based on the distance between compounds and as input for other downstream tasks, such as drug-target interaction prediction. However, they often require substantial computational resources and programming skills, so it is challenging for biologists and medicinal chemists to apply in silico methods in their research. Therefore, it is necessary to develop a user-friendly platform on which users can search for chemical compounds based on embedding vectors without any technical barriers.</p> <br> 
+<p> We proposed Dr.Emb Appyter, a user-friendly web platform for drug discovery. It uses embedding vectors to identify compounds similar to a given query in the embedding space. Dr.Emb Appyter provides various types of embedding methods, such as fingerprinting, SMILES, and transcriptional response-based methods, and embeds numerous compounds using them. The Faiss-based search system efficiently finds the closest compounds of query compounds in the library. Additionally, Dr.Emb Appyter offers information on the top compounds; visualizes the results with 3D scatter plots, heatmaps, and UpSet plots; and analyzes the results using a drug-set enrichment analysis. Dr.Emb Appyter is freely available at https://dremb.korea.ac.kr. </p>
+
 ------------
 
 # File Information
@@ -51,23 +52,33 @@ To explore additional drug set results, please click the link provided below in 
 
 # Start Dr.Emb Appyter
 ## Common Preparation
-    git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
-    cd The-Dr.Emb-Appyter
+``` {bash}
+git clone https://github.com/KU-MedAI/The-Dr.Emb-Appyter.git
+cd The-Dr.Emb-Appyter
+```
 In the case of Embedding vetors of Default Libraries file, the file size is about 10GB, which can result in a long download time.
-    # File Download
-    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD" -O Library.zip && rm -rf /tmp/cookies.txt && unzip Library.zip && rm -r Library.zip
-    wget 'https://docs.google.com/uc?export=download&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z' -O methods/mol2vec_model_300dim.pkl
+``` {bash}
+# File Download
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1bZpepqycN9LPPLXDqX8georOCYsAj_zD" -O Library.zip && rm -rf /tmp/cookies.txt && unzip Library.zip && rm -r Library.zip
+wget 'https://docs.google.com/uc?export=download&id=1Co4rwFTR0jPVMq_0ee5JP_1v_AufhT3Z' -O methods/mol2vec_model_300dim.pkl
+```
 
 ## Local
     pip install --no-cache-dir -r requirements.txt
 When running on a local computer, use the file `dr_emb.ipynb`. To view a simplified version of the execution results without the code, use the `--extras` option.
-    appyter dr_emb.ipynb --extras=toggle-code --extras=toc --extras=hide-code
+``` {bash}
+appyter dr_emb.ipynb --extras=toggle-code --extras=toc --extras=hide-code
+```
 
 ## Docker
-    docker build -t dremb:1.0 .
-    docker run --privileged --name dremb dremb:1.0
-When running on Docker, use the file `dr_emb_docker.ipynb`. To view a simplified version of the execution results without the code, use the `--extras` option.
-    appyter dr_emb_docker.ipynb --extras=toggle-code --extras=toc --extras=hide-code
+``` {bash}
+docker build -t dremb:1.0 .
+docker run --privileged --name dremb dremb:1.0
+```
+<p> When running on Docker, use the file `dr_emb_docker.ipynb`. To view a simplified version of the execution results without the code, use the `--extras` option. </p>
+``` {bash}
+appyter dr_emb_docker.ipynb --extras=toggle-code --extras=toc --extras=hide-code
+```
 ------------
 
 # Acknowledgement
