@@ -27,6 +27,8 @@ We provide two example input files, antiviral_drugs.txt for multiple query compo
 
 2. [Embedding Models](https://docs.google.com/uc?export=download&id=1UUukbVN6r5XIyL6bAIMKYOZ4igldIp8M&confirm=t) (10GB): The embedding methods (models) file includes ReSimNet, MoAble, Mol2vec, MACAW, and UMAP. Once decompressed, they amount to approximately 14GB.
 
+PubChem/ChEMBL library and embedding vectors file are huge. Please contact the author to use them.
+
 ------------
 
 # Simple Results
