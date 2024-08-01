@@ -1,7 +1,7 @@
 # Dr.Emb Appyter: A Web Platform for Drug Discovery using Embedding Vectors
 
 Dr.Emb Appyter is a web platform which searches closely located compounds of query compounds in the embedding space for drug discovery. 
-We provide the <a href="https://drive.google.com/file/d/1_ljSSSSlcQ5HTlpctqH2Ks_WWTus-93v/view?usp=sharing" target="_blank" rel="noopener noreferrer">user guide</a> for those who experience challenges when navigating Dr.Emb Appyter.
+We provide the <a href="https://drive.google.com/file/d/1_ljSSSSlcQ5HTlpctqH2Ks_WWTus-93v/view?usp=sharing" target="_blank" rel="noopener noreferrer">user guide</a> for those who experience challenges when navigating Dr.Emb Appyter. Please refer to the following paper for more detailed information: https://doi.org/10.1002/jcc.27469
 
 ![DrEmb](src/Figure_Main.png)
 
