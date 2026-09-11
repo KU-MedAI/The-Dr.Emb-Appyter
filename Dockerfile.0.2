@@ -1,0 +1,25 @@
+# Fast, reproducible code-only release built on the preserved 0.1 dependency image.
+# Library embeddings (~538 GB with all artifacts) remain bind-mounted read-only.
+FROM dremb-deploy:0.1
+
+LABEL maintainer="http://medai.korea.ac.kr"
+LABEL org.opencontainers.image.title="Dr.Emb Appyter 0.2"
+
+USER app
+WORKDIR /app
+
+COPY --chown=app:app dr_emb.ipynb utils.py appyter.json /app/
+COPY --chown=app:app build_fingerprint_cache.py /app/
+COPY --chown=app:app build_umap_cache.py /app/
+
+ENV APPYTER_IPYNB="dr_emb.ipynb"
+ENV APPYTER_FUSE="false"
+ENV DREMB_APP_ROOT="/app"
+ENV DREMB_LIBRARY_ROOT="/app/Library"
+ENV DREMB_METHODS_ROOT="/app/methods"
+ENV DREMB_FINGERPRINT_CACHE_ROOT="/app/Library/.dremb_fingerprint_cache"
+ENV DREMB_UMAP_CACHE_ROOT="/app/Library/.dremb_umap_cache"
+ENV DREMB_FAIL_FAST="1"
+
+EXPOSE 5000
+CMD ["appyter", "dr_emb.ipynb", "--extras=toggle-code", "--extras=toc", "--extras=hide-code"]

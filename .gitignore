@@ -2,3 +2,21 @@
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+# Runtime data and generated caches are distributed separately from Git.
+/Library/
+/methods/
+/input_data/
+/output_data/
+/__pycache__/
+*.py[cod]
+
+# Local benchmarks and generated result artifacts.
+/compare_search_versions.py
+/renew_option_matrix_test.py
+/verify_fingerprint_cache.py
+/*_candidates.tsv
+/*_results.tsv
+/input_drugs.pkl
+/PubChem_660.tsv
+/release/

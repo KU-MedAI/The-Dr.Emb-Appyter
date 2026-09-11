@@ -1,0 +1,8 @@
+*
+!.dockerignore
+!Dockerfile.0.2
+!appyter.json
+!dr_emb.ipynb
+!utils.py
+!build_fingerprint_cache.py
+!build_umap_cache.py
