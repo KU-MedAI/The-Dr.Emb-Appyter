@@ -67,12 +67,17 @@ def methods_path(*parts):
     return os.path.join(METHODS_ROOT, *parts)
 
 
-def _update_array_digest(digest, values):
+def _update_array_digest(digest, values, canonical_dtype=None):
     """Hash a numeric matrix without making one full-size contiguous copy."""
     array = np.asarray(values)
+    digest_dtype = (
+        np.dtype(canonical_dtype)
+        if canonical_dtype is not None
+        else array.dtype
+    )
     digest.update(str(array.shape).encode('ascii'))
-    digest.update(array.dtype.str.encode('ascii'))
-    if array.dtype.hasobject:
+    digest.update(digest_dtype.str.encode('ascii'))
+    if digest_dtype.hasobject:
         for value in array.flat:
             encoded = str(value).encode('utf-8')
             digest.update(len(encoded).to_bytes(8, 'little'))
@@ -80,12 +85,18 @@ def _update_array_digest(digest, values):
         return
 
     if array.ndim == 0:
-        digest.update(np.ascontiguousarray(array).view(np.uint8))
+        digest.update(
+            np.ascontiguousarray(array, dtype=digest_dtype).view(np.uint8)
+        )
         return
-    row_bytes = max(int(array[0:1].nbytes), 1)
+    row_elements = max(int(array[0:1].size), 1)
+    row_bytes = max(row_elements * digest_dtype.itemsize, 1)
     rows_per_chunk = max(1, (64 * 1024 * 1024) // row_bytes)
     for start in range(0, len(array), rows_per_chunk):
-        block = np.ascontiguousarray(array[start:start + rows_per_chunk])
+        block = np.ascontiguousarray(
+            array[start:start + rows_per_chunk],
+            dtype=digest_dtype,
+        )
         digest.update(block.view(np.uint8))
 
 
@@ -109,8 +120,13 @@ def umap_projection_cache_key(
         encoded = str(value).encode('utf-8')
         digest.update(len(encoded).to_bytes(8, 'little'))
         digest.update(encoded)
-    _update_array_digest(digest, library_features)
-    _update_array_digest(digest, query_features)
+    canonical_dtype = (
+        np.uint8
+        if embed_method in {'ECFP', 'MACCSKeys'}
+        else np.float32
+    )
+    _update_array_digest(digest, library_features, canonical_dtype)
+    _update_array_digest(digest, query_features, canonical_dtype)
     return digest.hexdigest()
 
 
@@ -131,7 +147,12 @@ def umap_library_projection_cache_key(
         encoded = str(value).encode('utf-8')
         digest.update(len(encoded).to_bytes(8, 'little'))
         digest.update(encoded)
-    _update_array_digest(digest, library_features)
+    canonical_dtype = (
+        np.uint8
+        if embed_method in {'ECFP', 'MACCSKeys'}
+        else np.float32
+    )
+    _update_array_digest(digest, library_features, canonical_dtype)
     return digest.hexdigest()
 
 
