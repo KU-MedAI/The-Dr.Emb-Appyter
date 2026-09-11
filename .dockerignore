@@ -6,3 +6,5 @@
 !utils.py
 !build_fingerprint_cache.py
 !build_umap_cache.py
+!static/
+!static/results.png

@@ -11,6 +11,7 @@ WORKDIR /app
 COPY --chown=app:app dr_emb.ipynb utils.py appyter.json /app/
 COPY --chown=app:app build_fingerprint_cache.py /app/
 COPY --chown=app:app build_umap_cache.py /app/
+COPY --chown=app:app static/results.png /app/static/results.png
 
 ENV APPYTER_IPYNB="dr_emb.ipynb"
 ENV APPYTER_FUSE="false"
